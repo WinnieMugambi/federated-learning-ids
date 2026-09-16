@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberShield FL-IDS: Collaborative FinTech Security</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Premium Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <!-- Main Container -->
+    <div class="app-layout">
+        
+        <!-- Left Sidebar Navigation Menu -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <div class="logo-text">
+                    <h2>CyberShield</h2>
+                    <span>FinTech FL-IDS Console</span>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <button class="nav-btn active" data-page="dashboard">
+                    <i class="fa-solid fa-chalkboard-user"></i> Command Center
+                </button>
+                <button class="nav-btn" data-page="banking">
+                    <i class="fa-solid fa-building-columns"></i> Banking Portal
+                </button>
+                <button class="nav-btn" data-page="lab">
+                    <i class="fa-solid fa-flask"></i> Federated Lab
+                </button>
+                <button class="nav-btn" data-page="inspector">
+                    <i class="fa-solid fa-microscope"></i> ML Neural Inspector
+                </button>
+                <button class="nav-btn" data-page="privacy">
+                    <i class="fa-solid fa-user-lock"></i> Privacy Hub
+                </button>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span id="global-status-text">Consortium Secure</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Panel Area -->
+        <main class="content-viewport">
+            
+            <!-- PAGE 1: COMMAND CENTER (DASHBOARD) -->
+            <section id="page-dashboard" class="page-section active">
+                <div class="page-header">
+                    <h2>Security Command Center</h2>
+                    <p>Overview of the FinTech Consortium Federated Security Architecture</p>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <!-- Topology Canvas Card -->
+                    <div class="glass-panel canvas-panel">
+                        <div class="panel-title">
+                            <i class="fa-solid fa-network-wired"></i> Consortium Network Topology
+                        </div>
+                        <div class="canvas-wrapper">
+                            <canvas id="network-canvas"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- System Overview Metrics -->
+                    <div class="metrics-sidebar">
+                        <div class="glass-panel">
+                            <div class="panel-title"><i class="fa-solid fa-heartbeat"></i> Health Scorecard</div>
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <span class="label">Consortium Accuracy</span>
+                                    <span class="value success" id="dash-acc">0.0%</span>
+                                </div>
+                                <div class="stat-card">
+                                    <span class="label">Privacy Leakage (ε)</span>
+                                    <span class="value warning" id="dash-eps">0.00</span>
+                                </div>
+                                <div class="stat-card">
+                                    <span class="label">Active Threat Nodes</span>
+                                    <span class="value danger" id="dash-threats">0</span>
+                                </div>
+                                <div class="stat-card">
+                                    <span class="label">Federated Rounds</span>
+                                    <span class="value info" id="dash-rounds">0</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Mini Threat Log -->
+                        <div class="glass-panel mini-logs-panel">
+                            <div class="panel-title"><i class="fa-solid fa-clipboard-list"></i> Latest Alerts</div>
+                            <div class="log-stream-mini" id="log-stream-mini">
+                                <div class="empty-log">Grid quiet. Monitoring active transactions...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- PAGE 2: BANKING PORTAL (LIVE SCENARIO) -->
+            <section id="page-banking" class="page-section">
+                <div class="page-header">
+                    <h2>Apex Retail Bank Transaction Portal</h2>
+                    <p>Live transaction stream showing client queries and threat filtration in action</p>
+                </div>
+                
+                <div class="banking-grid">
+                    <!-- Left: Transaction Queue -->
+                    <div class="glass-panel queue-panel">
+                        <div class="panel-title">
+                            <i class="fa-solid fa-shuffle"></i> Live Transaction Queue (Incoming Gateway)
+                        </div>
+                        <div class="transaction-container">
+                            <div class="ml-gate-shield" id="ml-gate-shield">
+                                <div class="shield-core"><i class="fa-solid fa-shield-halved"></i></div>
+                                <span class="shield-label">ML PROTECTION SHIELD</span>
+                            </div>
+                            <div class="transaction-queue" id="transaction-queue">
+                                <!-- Dynamic transactions flow down -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right: Server Status & Threat Controls -->
+                    <div class="banking-sidebar">
+                        <!-- Server Performance Gauges -->
+                        <div class="glass-panel server-panel">
+                            <div class="panel-title"><i class="fa-solid fa-server"></i> Bank Server Status</div>
+                            
+                            <div class="gauge-group">
+                                <div class="gauge-label">
+                                    <span>CPU Server Load</span>
+                                    <span id="cpu-load-val">12%</span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar-fill success" id="cpu-load-fill" style="width: 12%;"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="gauge-group">
+                                <div class="gauge-label">
+                                    <span>Transaction Success Rate</span>
+                                    <span id="success-rate-val">100%</span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar-fill success" id="success-rate-fill" style="width: 100%;"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="server-status-status" id="server-status-box">
+                                <div class="status-indicator">
+                                    <div class="status-dot green" id="server-status-dot"></div>
+                                    <span id="server-status-text">Server Healthy - Operations Nominal</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Attack Simulator Widgets -->
+                        <div class="glass-panel">
+                            <div class="panel-title"><i class="fa-solid fa-triangle-exclamation"></i> Launch Simulation Vectors</div>
+                            <p class="panel-desc">Simulate malicious actions to evaluate local vs collaborative detection capability.</p>
+                            <div class="attack-selector-vertical">
+                                <button class="action-btn danger-btn" data-attack="1">
+                                    <i class="fa-solid fa-bolt"></i> DDoS Attack (Floods Gateway)
+                                </button>
+                                <button class="action-btn warning-btn" data-attack="3">
+                                    <i class="fa-solid fa-key"></i> Brute Force (Apex Login Sweep)
+                                </button>
+                                <button class="action-btn info-btn" data-attack="4">
+                                    <i class="fa-solid fa-file-export"></i> Exfiltration (Steal Bank Ledger)
+                                </button>
+                                <button class="action-btn secondary-btn" id="clear-attacks-btn-page2">
+                                    <i class="fa-solid fa-shield"></i> Reset Vectors & Normalize Traffic
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- PAGE 3: FEDERATED LAB (TRAINING CONTROLS) -->
+            <section id="page-lab" class="page-section">
+                <div class="page-header">
+                    <h2>Federated Optimization & Training Lab</h2>
+                    <p>Configure algorithms, run training steps, and analyze accuracy convergence</p>
+                </div>
+                
+                <div class="lab-grid">
+                    <!-- Hyperparameter Controls -->
+                    <div class="glass-panel lab-controls">
+                        <div class="panel-title"><i class="fa-solid fa-sliders"></i> Algorithmic Configurations</div>
+                        
+                        <div class="control-group">
+                            <label>Consortium Aggregator Solver</label>
+                            <select id="aggregation-select" class="select-input">
+                                <option value="fedavg">Federated Averaging (FedAvg)</option>
+                                <option value="fedprox">FedProx (Non-IID Regularized)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>Learning Rate (η) <span class="val" id="lr-val">0.05</span></label>
+                            <input type="range" id="lr-slider" class="slider-input" min="0.01" max="0.3" step="0.01" value="0.05">
+                        </div>
+
+                        <div class="control-group">
+                            <label>Local Training Epochs <span class="val" id="epochs-val">5</span></label>
+                            <input type="range" id="epochs-slider" class="slider-input" min="1" max="15" step="1" value="5">
+                        </div>
+
+                        <div class="control-group">
+                            <label>Training Batch Size <span class="val" id="batch-val">16</span></label>
+                            <input type="range" id="batch-slider" class="slider-input" min="8" max="64" step="8" value="16">
+                        </div>
+                        
+                        <div class="control-group" id="fedprox-mu-group" style="display: none;">
+                            <label>FedProx Proximity Regularizer (μ) <span class="val" id="mu-val">0.1</span></label>
+                            <input type="range" id="mu-slider" class="slider-input" min="0.01" max="0.5" step="0.01" value="0.1">
+                        </div>
+                        
+                        <div class="divider"></div>
+                        
+                        <div class="control-group">
+                            <div class="toggle-container">
+                                <span>Enable Differential Privacy (DP-SGD)</span>
+                                <label class="switch">
+                                    <input type="checkbox" id="dp-toggle" checked>
+                                    <span class="slider-toggle"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="control-group dp-setting">
+                            <label>L2 Gradient Clipping Bound (C) <span class="val" id="clip-val">1.0</span></label>
+                            <input type="range" id="clip-slider" class="slider-input" min="0.1" max="3.0" step="0.1" value="1.0">
+                        </div>
+
+                        <div class="control-group dp-setting">
+                            <label>Noise Scale (σ) <span class="val" id="noise-val">1.0</span></label>
+                            <input type="range" id="noise-slider" class="slider-input" min="0.1" max="3.0" step="0.1" value="1.0">
+                        </div>
+                        
+                        <div class="action-buttons-group">
+                            <button id="train-round-btn" class="btn-primary">
+                                <i class="fa-solid fa-play"></i> Trigger Federated Round
+                            </button>
+                            <button id="auto-train-btn" class="btn-secondary">
+                                <i class="fa-solid fa-rotate"></i> Toggle Continuous Training
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Performance Charts -->
+                    <div class="glass-panel lab-charts">
+                        <div class="panel-title"><i class="fa-solid fa-chart-area"></i> Training Metrics Charts</div>
+                        
+                        <div class="chart-box">
+                            <h4>Global Model Accuracy Convergence (%)</h4>
+                            <div class="chart-canvas-wrapper">
+                                <canvas id="accuracy-chart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-box">
+                            <h4>Consortium Cumulative Privacy Leakage (Epsilon ε)</h4>
+                            <div class="chart-canvas-wrapper">
+                                <canvas id="privacy-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- PAGE 4: ML NEURAL INSPECTOR -->
+            <section id="page-inspector" class="page-section">
+                <div class="page-header">
+                    <h2>Machine Learning Neural Inspector</h2>
+                    <p>Real-time visual graph of the Multi-Layer Perceptron (MLP) classification network processing flows</p>
+                </div>
+                
+                <div class="inspector-grid">
+                    <!-- Interactive Graph -->
+                    <div class="glass-panel graph-panel">
+                        <div class="panel-title">
+                            <i class="fa-solid fa-circle-nodes"></i> Active Neural Classification Pipeline (Real-Time)
+                        </div>
+                        <div class="svg-container">
+                            <svg id="neural-network-svg" width="100%" height="100%"></svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Weights Inspector -->
+                    <div class="inspector-sidebar">
+                        <div class="glass-panel">
+                            <div class="panel-title"><i class="fa-solid fa-table-cells"></i> Choose Target Consortium Node</div>
+                            <div class="node-select-grid">
+                                <button class="node-select-btn active" data-node="0">Apex Retail Bank</button>
+                                <button class="node-select-btn" data-node="1">Global Trust Fund</button>
+                                <button class="node-select-btn" data-node="2">CryptoPay Gateway</button>
+                            </div>
+                        </div>
+                        
+                        <div class="glass-panel">
+                            <div class="panel-title"><i class="fa-solid fa-grid-3x3"></i> Local Model Weights Grid (W1)</div>
+                            <div class="matrix-visualizer" id="weights-grid">
+                                <!-- Squares generated dynamically -->
+                            </div>
+                            <div class="matrix-legend">
+                                <div class="legend-item"><span class="legend-box pos"></span><span>Positive Weights</span></div>
+                                <div class="legend-item"><span class="legend-box neg"></span><span>Negative Weights</span></div>
+                            </div>
+                            <p class="weights-desc">
+                                Visualizes the weight matrix mapping input features to hidden neurons. 
+                                Watch how the weights adapt and how Differential Privacy noise introduces stochastics to protect individual flow records.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- PAGE 5: PRIVACY HUB -->
+            <section id="page-privacy" class="page-section">
+                <div class="page-header">
+                    <h2>Privacy-Preserving Infrastructure</h2>
+                    <p>Understanding the mathematical guarantees protecting FinTech records</p>
+                </div>
+                
+                <div class="privacy-hub-grid">
+                    <div class="glass-panel privacy-card">
+                        <div class="panel-title"><i class="fa-solid fa-key"></i> Differential Privacy (DP-SGD)</div>
+                        <p>
+                            In standard machine learning, model weights can memorize specific characteristics of raw datasets. 
+                            An attacker who gets access to the model can perform <strong>Membership Inference Attacks</strong> to check if a specific client transaction was in the training set.
+                        </p>
+                        <p>
+                            To prevent this, our clients use <strong>DP-SGD (Stochastic Gradient Descent with Differential Privacy)</strong>. 
+                            Every local gradient calculated from a transaction is clipped, limiting the maximum impact a single transaction can have on the model. 
+                            We then inject calibrated Gaussian Noise:
+                        </p>
+                        <div class="formula-box">
+                            $$W \leftarrow W - \eta \left( \frac{1}{B} \sum_{i=1}^B \text{clip}(g_i, C) + \mathcal{N}(0, \sigma^2 C^2) \right)$$
+                        </div>
+                        <p>
+                            This guarantees mathematically that the outputs of the model are practically indistinguishable whether any single patient/transaction was included or not.
+                        </p>
+                    </div>
+
+                    <div class="glass-panel privacy-card">
+                        <div class="panel-title"><i class="fa-solid fa-diagram-project"></i> Federated Security Benefits</div>
+                        <p>
+                            By sharing model updates instead of raw data, the FinTech Consortium gets the benefits of joint defense:
+                        </p>
+                        <ul class="benefits-list">
+                            <li><i class="fa-solid fa-check green"></i> <strong>Zero Data Sharing:</strong> Your raw banking transfers never leave your bank's local firewall.</li>
+                            <li><i class="fa-solid fa-check green"></i> <strong>Collaborative Immunity:</strong> If one bank detects a zero-day attack, the updated global weights protect all other banks instantly without revealing details.</li>
+                            <li><i class="fa-solid fa-check green"></i> <strong>FedProx Optimization:</strong> Addresses Non-IID constraints, ensuring the local models don't collapse on their specific department configurations.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+        </main>
+    </div>
+
+    <!-- Live Audit Log Stream Panel at bottom -->
+    <div class="logs-viewport">
+        <div class="glass-panel logs-panel">
+            <div class="panel-title">
+                <i class="fa-solid fa-terminal"></i> Consortium Cyber Audit logs
+            </div>
+            <div class="log-terminal" id="log-terminal-output">
+                <!-- Javascript stream goes here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Simulation Libraries -->
+    <script src="traffic.js"></script>
+    <script src="client.js"></script>
+    <script src="federated.js"></script>
+    <!-- Frontend Application Controller -->
+    <script src="app.js"></script>
+
+    <!-- MathJax for rendering LaTeX math formulas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/esax.js"></script>
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+      };
+    </script>
+
+</body>
+</html>
