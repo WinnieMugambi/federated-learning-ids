@@ -1,4 +1,4 @@
-"""
+﻿"""
 database.py
 SQLite Database Module for FL-IDS.
 Manages schemas, user sessions registry, threat logs audit trailing,

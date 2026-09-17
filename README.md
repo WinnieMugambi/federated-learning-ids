@@ -1,82 +1,143 @@
-# Federated Learning-Based Intrusion Detection System (FL-IDS)
+# 🛡️ Collaborative FinTech FL-IDS: Privacy-Preserving Intrusion Detection System
 
-This repository implements a **Privacy-Preserving Federated Learning Intrusion Detection System (FL-IDS)** designed for enterprise environments. The system facilitates collaborative training of network anomaly detection models across multiple heterogeneous departments (e.g., Finance, R&D, HR, IoT) without requiring any raw packet logs to leave their respective local subnetworks, ensuring strict data residency and privacy compliance.
+[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+[![Flask](https://img.shields.io/badge/Flask-2.0+-green.svg)](https://flask.palletsprojects.com/)
+[![Flower](https://img.shields.io/badge/Federated%20Learning-Flower%20(FLWR)-ff69b4.svg)](https://flower.ai/)
+[![Scikit-Learn](https://img.shields.io/badge/ML-Scikit--Learn-orange.svg)](https://scikit-learn.org/)
+[![Database](https://img.shields.io/badge/Database-SQLite-003B57.svg)](https://www.sqlite.org/)
+[![Docker](https://img.shields.io/badge/Container-Docker-2496ED.svg)](https://www.docker.com/)
+[![Tests](https://img.shields.io/badge/Tests-Pytest-yellow.svg)](https://docs.pytest.org/)
 
----
+An enterprise-grade **Federated Learning Intrusion Detection System (FL-IDS)** for collaborative cyber threat defense across financial institutions (Retail Banking, Investment Funds, Crypto Payment Gateways).
 
-## 🚀 Key Features
-
-1. **In-Browser Neural Engine**: A complete Multi-Layer Perceptron (MLP) classifier written from scratch in raw Javascript, featuring forward propagation, backpropagation, and weight updating.
-2. **Privacy Preservation (DP-SGD)**: Implements differential privacy guarantees on local training weight updates:
-   - **L2 Gradient Clipping**: Limits the influence of individual traffic flow logs.
-   - **Gaussian Noise Addition**: Adds calibrated noise before model uploads.
-   - **Moments Accountant**: Computes real-time privacy budget expenditure ($\epsilon$) at a target reliability threshold ($\delta = 10^{-5}$).
-3. **Advanced Federated Optimization**:
-   - **FedAvg**: Aggregates client weights proportional to dataset volume.
-   - **FedProx**: Adjusts local client updates with a proximal regularization term ($\mu$) to prevent weight divergence in Non-IID traffic environments.
-4. **Interactive Dashboard**:
-   - Real-time packet animation showing threat flows and model exchanges.
-   - Dynamic attack generator (DDoS, Port Scan, Brute Force, Exfiltration).
-   - Local model weight matrix heat-map visualizer.
-   - Chart.js integration showing system-wide model convergence and privacy-utility trade-offs.
+The system enables financial consortiums to collaboratively train neural intrusion detection models to detect zero-day cyber threats (DDoS, Brute Force SSH, Data Exfiltration, Port Scanning) **without sharing raw customer financial data or packet logs**, ensuring strict banking privacy compliance (GDPR, PCI-DSS).
 
 ---
 
-## 🛠️ Mathematical Formulation
-
-### 1. Local Loss with Proximal Constraint (FedProx)
-During training with FedProx, the local loss is modified by adding a proximal regularization term to keep the client weights $W$ close to the current global model weights $W^{global}$:
-$$\mathcal{L}_{prox}(W) = \mathcal{L}(W) + \frac{\mu}{2} \left\| W - W^{global} \right\|_2^2$$
-
-Thus, the gradient update for a weight matrix includes:
-$$\nabla \mathcal{L}_{prox}(W) = \nabla \mathcal{L}(W) + \mu(W - W^{global})$$
-
-### 2. Differential Privacy Guarantees (DP-SGD)
-For each training step, the gradients of individual samples $g_i$ are clipped to a maximum L2-norm threshold $C$:
-$$\bar{g}_i = g_i \cdot \min\left(1, \frac{C}{\|g_i\|_2}\right)$$
-
-Gaussian noise is added to the batch gradient sum:
-$$\tilde{g} = \sum_{i=1}^B \bar{g}_i + \mathcal{N}(0, \sigma^2 C^2 I)$$
-
-The weights are then updated:
-$$W \leftarrow W - \eta \frac{\tilde{g}}{B}$$
-
----
-
-## 📂 Project Directory Structure
+## 🏛️ System Architecture
 
 ```
-federated_learning_ids/
-├── index.html        # Main Cyber Command dashboard markup
-├── styles.css        # Premium dark-theme glassmorphic styles
-├── app.js            # Frontend orchestration, canvas animations, charts
-├── traffic.js        # Synthetic multi-dimensional packet simulator
-├── client.js         # Local MLP neural network & DP-SGD solver
-├── federated.js      # Federated Server Aggregator (FedAvg & FedProx)
-├── serve.py          # Python server utility (opens local browser)
-└── README.md         # System documentation
+                                  ┌────────────────────────────────────────────────────────┐
+                                  │      Interactive Web Dashboard (HTML5/CSS3/JS/SVG)     │
+                                  │   - Command Center Topology Map   - Banking Portal     │
+                                  │   - Federated Lab (Flower Engine) - Neural Inspector   │
+                                  └───────────────────────────▲────────────────────────────┘
+                                                              │ REST API / JSON
+                                  ┌───────────────────────────▼────────────────────────────┐
+                                  │                 Flask Web Backend (app.py)             │
+                                  │       - Authentication (Flask-Login & Cryptography)    │
+                                  │       - Real-time Threat Classification Engine         │
+                                  └──────────────▲─────────────────────────────▲───────────┘
+                                                 │                             │
+                        ┌────────────────────────▼────────┐           ┌────────▼──────────────┐
+                        │       SQLite (database.db)      │           │   Flower FL Server    │
+                        │ - User Accounts                 │           │   (fl_server.py)      │
+                        │ - Immutable Threat Logs Audit   │           │   Port: 5040 (gRPC)   │
+                        │ - Training Round Metrics        │           └────────▲──────────────┘
+                        └─────────────────────────────────┘                    │ FedAvg Aggregation
+                                                                               │
+                                                   ┌───────────────────────────┴───────────────────────────┐
+                                                   │                                                       │
+                                        ┌──────────▼──────────┐                                 ┌──────────▼──────────┐
+                                        │  FL Client: Retail  │                                 │  FL Client: Crypto  │
+                                        │ (fl_client.py 0)    │       ... (Fund Client 1)       │ (fl_client.py 2)    │
+                                        │ - NSL-KDD Shard     │                                 │ - NSL-KDD Shard     │
+                                        │ - Scikit-learn MLP  │                                 │ - Scikit-learn MLP  │
+                                        └─────────────────────┘                                 └─────────────────────┘
 ```
 
 ---
 
-## 🏃 How to Run the System
+## ✨ Core Features
 
-### Method 1: Local HTTP Server (Recommended)
-If you have Python installed, you can serve the dashboard locally which automatically launches your default browser:
+1. **Decentralized Collaborative Defense (Flower / FLWR):**
+   - Implements **Federated Averaging (FedAvg)** and **FedProx** algorithms over gRPC channels.
+   - Cross-bank collaborative immunity: a zero-day attack identified at one bank updates the global neural weights for all participants without revealing raw transaction records.
+
+2. **Machine Learning Intrusion Classifier (Scikit-Learn):**
+   - Multi-Layer Perceptron (`MLPClassifier`) trained on 8-dimensional **NSL-KDD** network traffic features (packet rates, byte volume, protocol entropy, failed logins, error rates).
+
+3. **Differential Privacy (DP-SGD):**
+   - $L_2$ gradient clipping and Gaussian noise injection protect local training gradients against membership inference attacks.
+
+4. **Live Banking Simulator & Neural Inspector:**
+   - Real-time packet inspection queue with dynamic **ML Gate Shield**.
+   - Interactive SVG neural graph visualizing neuron activations and synapse weights in real-time.
+
+5. **Relational Database Audit Trails (SQLite):**
+   - Persists all blocked threats, user authentication records, and historical accuracy/epsilon training metrics.
+
+---
+
+## 🚀 Quick Start Guide
+
+### Prerequisites
+- Python 3.11+
+- Git
+
+### 1. Clone the Repository
 ```bash
-python serve.py
+git clone https://github.com/WinnieMugambi/federated-learning-ids.git
+cd federated-learning-ids
 ```
-*The server runs on `http://localhost:8080`.*
 
-### Method 2: Open HTML File
-You can also open the `index.html` file directly in any modern web browser by double-clicking it. No compilation or dependencies are required.
+### 2. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Initialize the SQLite Database
+```bash
+python database.py
+```
+*Creates `database.db` and seeds default administrator credentials (`admin` / `admin123`).*
+
+### 4. Launch the Application
+```bash
+python app.py
+```
+Open your browser and navigate to: **`http://localhost:8080`**
 
 ---
 
-## 🛡️ Validation Walkthrough
+## 🧪 Automated Testing
+Run the Pytest validation suite to verify database CRUD operations and model parameter serialization:
+```bash
+pytest test_app.py
+```
 
-1. **Observe Untrained System**: Launch a **DDoS attack** or **Port Scan** vector. The live logs terminal will show that the local node's untrained model continuously **misses** the threat or misclassifies it (false negatives).
-2. **Perform Training**: Run a few rounds of Federated Learning (or enable continuous auto-train).
-3. **Observe Convergence**: The accuracy chart will climb toward >90% while the privacy budget spending ($\epsilon$) slowly accumulates.
-4. **Inspect Node weights**: Click any node (e.g. Finance) to open the Node Inspector. View the live weights grid. If DP is enabled, notice how weights remain stable but show subtle stochastic fluctuations (noise injection).
-5. **Verify Anomaly Block**: Re-trigger the attacks. The logs will report immediate, high-confidence **detections** of DDoS, Port Scan, Brute Force, and Exfiltration across all nodes.
+---
+
+## 🐳 Docker Deployment
+Run the complete stack inside a containerized environment:
+```bash
+docker-compose up --build
+```
+Access the application at `http://localhost:8080`.
+
+---
+
+## 📂 Project Structure
+
+```
+├── app.py               # Main Flask web application and API endpoints
+├── database.py          # SQLite database schema, CRUD queries, and password hashing
+├── data_loader.py       # NSL-KDD dataset preprocessor and Non-IID client sharding
+├── fl_server.py         # Flower federated server (FedAvg weight aggregator)
+├── fl_client.py         # Flower client wrapping Scikit-Learn MLPClassifier
+├── test_app.py          # Automated Pytest unit test suite
+├── requirements.txt     # Python package requirements
+├── Dockerfile           # Docker container build specifications
+├── docker-compose.yml   # Multi-service container orchestration
+├── templates/
+│   ├── login.html       # Glassmorphism login page
+│   └── dashboard.html   # Multi-page cyber command center & simulator
+└── static/
+    ├── css/styles.css   # Dark-mode styling, glowing accents, animations
+    └── js/dashboard.js  # REST API bridge, SVG neural network visualizer, charts
+```
+
+---
+
+## 👥 Author
+- **Winnie Mugambi**

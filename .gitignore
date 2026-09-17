@@ -1,0 +1,22 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# PyCharm / IDE settings
+.idea/
+.vscode/
+
+# SQLite database local instances (optional, keeping schemas in code)
+*.db-journal
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
