@@ -1,4 +1,10 @@
-# 🛡️ Collaborative FinTech FL-IDS: Privacy-Preserving Intrusion Detection System
+# 🛡️ FinTech FL-IDS: Collaborative Intrusion Detection System
+
+### 🚀 [👉 CLICK HERE TO OPEN THE LIVE SYSTEM]([https://your-link-from-render.onrender.com](https://federated-learning-ids.onrender.com/login))
+> **Default Demo Login:**  
+> **Username:** `admin` | **Password:** `admin123`
+
+---# 🛡️ Collaborative FinTech FL-IDS: Privacy-Preserving Intrusion Detection System
 
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![Flask](https://img.shields.io/badge/Flask-2.0+-green.svg)](https://flask.palletsprojects.com/)
